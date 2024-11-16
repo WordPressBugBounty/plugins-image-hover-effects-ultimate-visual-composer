@@ -5,11 +5,12 @@ namespace OXI_FLIP_BOX_PLUGINS\Inc_Helper;
 trait Admin_helper
 {
 
+    public function Flip_Import()
+    {
+        new \OXI_FLIP_BOX_PLUGINS\Page\Import();
+    }
 
-
-   
-
-    public function Flip_Create()
+	public function Flip_Create()
     {
         $styleid = (!empty($_GET['styleid']) ? (int) $_GET['styleid'] : '');
         if (!empty($styleid) && $styleid > 0) :
@@ -24,14 +25,14 @@ trait Admin_helper
         endif;
     }
 
-    public function Flip_Import()
-    {
-        new \OXI_FLIP_BOX_PLUGINS\Page\Import();
-    }
-
     public function Flip_Addons()
     {
         new \OXI_FLIP_BOX_PLUGINS\Page\Addons();
+    }
+
+	public function Flip_Home()
+    {
+        new \OXI_FLIP_BOX_PLUGINS\Page\Home();
     }
 
     public function Flip_Settings()
@@ -79,11 +80,6 @@ trait Admin_helper
         add_dashboard_page('Welcome To Flipbox - Awesomes Flip Boxes Image Overlay', 'Welcome To Flipbox - Awesomes Flip Boxes Image Overlay', 'read', 'oxi-flip-box-activation', [$this, 'oxi_flip_box_activation']);
     }
 
-    public function Flip_Home()
-    {
-        new \OXI_FLIP_BOX_PLUGINS\Page\Home();
-    }
-
     public function data_process()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -127,8 +123,6 @@ trait Admin_helper
         $this->admin_recommended();
         $this->admin_notice();
     }
-
-    
 
     /**
      * Admin Install date Check
@@ -187,18 +181,8 @@ trait Admin_helper
         </div>
     <?php
     }
-/**
-     * Admin Notice Check
-     *
-     * @since 2.0.0
-     */
-    public function admin_recommended_status()
-    {
-        $data = get_option('oxilab_flip_box_recommended');
-        return $data;
-    }
 
-    public function admin_recommended()
+	public function admin_recommended()
     {
         if (!empty($this->admin_recommended_status())) :
             return;
@@ -207,6 +191,17 @@ trait Admin_helper
             return;
         endif;
         new \OXI_FLIP_BOX_PLUGINS\Classes\Support_Recommended();
+    }
+
+	/**
+     * Admin Notice Check
+     *
+     * @since 2.0.0
+     */
+    public function admin_recommended_status()
+    {
+        $data = get_option('oxilab_flip_box_recommended');
+        return $data;
     }
 
     /**

@@ -3,8 +3,8 @@ Contributors: Biplob018, richardmallick
 Donate link: https://www.oxilab.org
 Tags: flip box, flip image, wordpress flipbox plugins, flipboxes, flipbox
 Requires at least: 4.4
-Stable tag: 2.9.6
-Tested up to: 6.6.2
+Stable tag: 2.9.7
+Tested up to: 6.7
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -103,82 +103,6 @@ Flipbox - Awesomes Flip Boxes Image Overlay aims to make your website more attra
 
 <strong>Instant Customizing Option</strong>- With the instant customizing facility users can edit/delete/update the flip box image Content at any time they want.
 
-<strong>Demo</strong>- We decorated the demo page with the template of team showcase. You can select a template from template Select page instantly and very faster before start to adding the information. We developed very Awesome, modern and unique team showcase templates on our demo page.
-
-<strong>Use just an image</strong>- Wanna use an image instead of using an icon? You can choose to use an image that will show up in the same area as the icon with this plugin. The settings allow you to specify the exact image size so it displays perfectly in the box. Using an image instead of an icon opens up a whole new look for the flip boxes and gives additional creative uses.
-
-<strong>Animation</strong>- There are many animation effects for the flip boxes. Select your preferable animation effect.
-
-Title / Description-This option hides/shows the title and description.
-
-Title Color- This color selection is for the header, which appears on slides.
-
-Description Color- This option is for selecting colors for description, which appears on slides.
-
-Overlay Color- This choice is to overlay that appear as background for titles a description on the image.
-
-Add images via external URL- You can also include external URL images. By using this feature, you can add a completely different image patterns to your flip box image.
-
-Automatic Image Cropping- Flipbox - Awesomes Flip Boxes Image Overlay plugin can automatically resize your images to a size you specify, so you don’t have to worry about doing it manually yourself. So you don’t need to worry if your images are too big or too small, they will all come out the same size in the slider.
-
-Pixels or percentage- we allow Pixels or percentage to customize the width and height of the flip box image.
-
-<strong>Cross Browser</strong>- Tested in major desktop, tablet, and mobile browsers and fully featured in Firefox, Chrome, Safari, Opera, and Internet Explorer 10+. With support for Internet Explorer 8 and 9 via a fallback theme; a traditional side-to-side.
-
-Images – Allows you to specify different image sources for different screen sizes. For example, mobile devices will load smaller images.
-
-<strong>Touch Support</strong>- Touch swiping and tapping supported to allow for navigation between steps.
- 
-<strong>Highly responsive awesome Flip Box!<strong>
-
-Flipbox - Awesomes Flip Boxes Image Overlay themes come with their own settings and preset skins that can be customized without any HTML or CSS knowledge at all. You can define multiple instances of the image flip box, and then you can arrange the items with the help of widgets and shortcodes. Professional and responsive Flip Box plugin has an amazing transition effects, sequence of the other images: Fade, Cross Fade, Slide, Slideshow, Slice, Blinds, 3D, 3D Horizontal, Horizontal, Vertical, Blocks and Shuffle. Flipbox - Awesomes Flip Boxes Image Overlay give to image a unique look and beautiful design. Animation options allow adding different transition effects for the responsive flip box. The flip box will give a unique look to your product profile or item to display, with its descriptions and titles which also has their own effects. Flipbox - Awesomes Flip Boxes Image Overlay can help to improve your website in a number of ways, such as strong interactivity, add more style, save space and make content more attractive, linking to other pages and much more! All widgets in this plugin are fully Responsive and Customizable also they are pretty SEO friendly.
-
-<strong>Lots of widgets</strong>
-
-We packed lots of the most useful widgets into our Flipbox - Awesomes Flip Boxes Image Overlay Wordpress plugin. True, that’s way more than we had to offer, but we wanted to spare no widget from you, so you can reach the top of your design capabilities. Here is a list what we offer:
-
-Title And Description- You can add Title and Description for all the images within the flip box it will beautifully overlay on the flip boxes and image overlay with the slightly transparent background or even your own selected background. You can customize the background opacity as well. Also, you can add some link on the background image. You can put a title on the front and backside.
-
-Icon Heaven- Font Awesome Icons are tightly integrating into the flip boxes along with multiple options; icon color, circle, color and border, circle show or hide, icon flip, rotate, spin and animate.
-
-Options for Content Customizing- You can use Google fonts, change the size, color, font, background. Creating all this you will have the original Slideshow with pretty content. You also can add buttons to your content and the box height will extend based on the amount of content you use.
-
-Adds Title Style- You can do more styling with the Flipbox - Awesomes Flip Boxes Image Overlay on the title of your each image.
-
-Border Control- Flip boxes and image overlay allow you to use borders and set the border width, color and radius. You can even set the border properties individually per box to make one box stand out from the others with featured content. Take full control of your borders with this plugin.
-
-Create Description Style- Description Style section suggests choosing different effects and colors for the flip box images.
-
-Social Sharing – Navigate to your flip box and click the Social Sharing option in the slider menu in order to add unlimited social sharing icons on the item. You can pick a couple from available Facebook, Twitter, Google+, Pinterest, LinkedIn, blogger, Instagram, Tumblr and much more. 
-
-Beautiful Slideshow and Flip Effects- Flipbox - Awesomes Flip Boxes Image Overlay makes displaying your gallery of images a beautiful experience, by using amazing slideshow and flipping effects.
-
-Width and height- Flip Box width and height is for making the image size within the box more accurate. What you need is just give the right size for the images of the Flipbox - Awesomes Flip Boxes Image Overlay Plugin.
-
-Custom URL- When adding an image in flip box, you can make it so it links to a specific page. You can set URL for each image that works on button/icon click.
-
-Mobile-Friendly plugin- Flipbox - Awesomes Flip Boxes Image Overlay are fully responsive, which means you can open your image slider on various devices: Smartphones, Tablets, desktop.  
-
-Custom Element Button- Add a button with the link to the images of the flip box and add suitable styling to the button as well.
-
-Custom Element Image- Add images on the flip box and do suitable styling and customization with the images. You are able to add images from the Media Library.
-
-Advanced Flip Box Shortcode – Flipbox - Awesomes Flip Boxes Image Overlay has 2 shortcode types: One is prepared to be included on your WordPress post or page and the other is for inserting the Flipbox - Awesomes Flip Boxes Image Overlay within your theme. You can customize the embedding of the flip box on your website.
-
-<strong>Highly Customizable Flip Box<strong>
-
-Flipbox - Awesomes Flip Boxes Image Overlay WP plugin is very much customizable and professional. You can customize the page with a lot of features. Our plugin built with very user-friendly atmosphere. Developers can find more option to customize their flip box gallery. We’ve left a bunch of option to work with. Here at this point we’re going to discuss about the some customizing option that you’ll find in the plugin editor page. Let’s talk about them… 
-
-Flip Box Creation- On the plugin submenu you’ll find the first modification option named “Create New”. With this option you can create a Flip Box image and customize them with text, button, icon, link fonts, effects, color, animation, navigation, slider and much more. This option is the primary and also the main option of adding flip box image gallery. Within this option you’ll find the place where you can upload the image for flip box. After finishing upload you can find a different customizing section. On the first there’s the general setting under 4 sections of customizing option. You can customize the image, links, animation, box shadow here. We’ll discuss the rest of them later in this article.
-
-Flip Settings- When you click on the “Add New Flip” option, you’ll find a flip image modification form. Here you can add a front and backend image for the flip. You can select the flip type and effect from the option. In this form you’ll need to fill up the front image and backend image info. You can fill the front boxes with a title, description and font-awesome icon which will allow you to get a nice icon. On the backend image you can fill the boxes with title, description and button text. Here you can put a link for the button to create a linked image. For both front and backend image we’ve left full color customizing control to your hand. You can customize the background color, border color, icon color, icon background color, heading color and text color. Also for the backend image you can customize button color, button background color, button hover and button hover background color. The color modification is all for you!
-
-General customizing option- Here you can customize the general effects of the flip box image. You can customize how many image you want per row at once. Then you can customize height, width, border radius, margin, link opening, animation and box shadow effects. Lots of customizing options are left to your hand so that you can decorate your flip box at your own style and effect.
-
-Separated customizing option- With Flip boxes and Image Overlay plugin you’ll find the unique separated customizing option for both front and backend image. You can customize these two sections separately. That means you have the access of full modification in deepest version. You can modify the general effects of front and back image. The heading and info text will be able to edited here in front and backend option. You can customize the icon settings of front image and button text settings of back image here. The unique modification option will give the plugin users a new experience of using flip box plugin.
-
-Slider Settings- Flipbox - Awesomes Flip Boxes Image Overlay also consists of sliding effect with image hovering in it. You can turn on sliding to get slide effect on your flip box image. You can also customize the navigation buttons or arrow settings, decorate them with custom color, size, style, positioning and hovering. The pagination settings is for customizing the pagination effect here. You can decorate pagination effect with very clear and specific option. 
-
 == Installation ==
 
 <p>Installation of <strong>Flipbox - Awesomes Flip Boxes Image Overlay</strong> is very simple.</p> 
@@ -248,6 +172,10 @@ If You acquired the Flipbox - Awesomes Flip Boxes Image Overlay and have not rec
 
 
 == Changelog ==
+
+= 2.9.7 = 
+*Compatible with 6.7
+*Fixed Data table search issue
 
 = 2.9.6 = 
 *Compatible with 6.6.2
