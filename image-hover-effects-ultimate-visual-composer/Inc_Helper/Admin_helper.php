@@ -124,6 +124,17 @@ trait Admin_helper
         $this->admin_notice();
     }
 
+	public function admin_notice()
+    {
+        if (!empty($this->admin_notice_status())) :
+            return;
+        endif;
+        if (strtotime('-7 day') < $this->installation_date()) :
+            return;
+        endif;
+        new \OXI_FLIP_BOX_PLUGINS\Classes\Support_Reviews();
+    }
+
     /**
      * Admin Install date Check
      *
@@ -139,16 +150,17 @@ trait Admin_helper
         return $data;
     }
 
-    public function admin_notice()
+	/**
+     * Admin Notice Check
+     *
+     * @since 2.0.0
+     */
+    public function admin_notice_status()
     {
-        if (!empty($this->admin_notice_status())) :
-            return;
-        endif;
-        if (strtotime('-7 day') < $this->installation_date()) :
-            return;
-        endif;
-        new \OXI_FLIP_BOX_PLUGINS\Classes\Support_Reviews();
+        $data = get_option('oxilab_flip_box_nobug');
+        return $data;
     }
+
     public function SupportAndComments($agr)
     {
 
@@ -182,17 +194,6 @@ trait Admin_helper
     <?php
     }
 
-	public function admin_recommended()
-    {
-        if (!empty($this->admin_recommended_status())) :
-            return;
-        endif;
-        if (strtotime('-1 day') < $this->installation_date()) :
-            return;
-        endif;
-        new \OXI_FLIP_BOX_PLUGINS\Classes\Support_Recommended();
-    }
-
 	/**
      * Admin Notice Check
      *
@@ -204,16 +205,18 @@ trait Admin_helper
         return $data;
     }
 
-    /**
-     * Admin Notice Check
-     *
-     * @since 2.0.0
-     */
-    public function admin_notice_status()
+	public function admin_recommended()
     {
-        $data = get_option('oxilab_flip_box_nobug');
-        return $data;
+        if (!empty($this->admin_recommended_status())) :
+            return;
+        endif;
+        if (strtotime('-1 day') < $this->installation_date()) :
+            return;
+        endif;
+        new \OXI_FLIP_BOX_PLUGINS\Classes\Support_Recommended();
     }
+
+    
     /**
      * Plugin Admin Top Menu
      *

@@ -14,10 +14,6 @@ namespace OXI_FLIP_BOX_PLUGINS\Inc_Helper;
 trait Sanitization
 {
 
-
-
-    
-
     public function oxilab_flip_box_admin_font_weight($id, $value, $name, $title)
     {
     ?>
