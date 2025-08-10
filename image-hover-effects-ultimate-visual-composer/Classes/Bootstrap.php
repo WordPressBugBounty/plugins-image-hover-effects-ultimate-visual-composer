@@ -76,7 +76,12 @@ class Bootstrap
             $this->User_Admin();
             $this->User_Reviews();
         }
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scriptss' ] );
     }
+
+	public function admin_enqueue_scriptss() {
+		wp_enqueue_style('oxi_flip-global-admin-style', OXI_FLIP_BOX_URL . 'asset/backend/css/global-admin.css', false, OXI_FLIP_BOX_PLUGIN_VERSION);
+	}
 
 	/**
      * Execute Shortcode

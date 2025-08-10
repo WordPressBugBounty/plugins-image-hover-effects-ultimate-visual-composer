@@ -1,31 +1,95 @@
 /* ==========================================================================
    Welcome / Getting Started page
    ========================================================================== */
-
-.about-wrap .image-badge {
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: #999;
-	font-size: 14px;
-	text-align: center;
-	margin: 5px 0 0;
-	width: 150px;
+.wrap.about-wrap {
+    padding: 50px 20px;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
 }
 
-.about-wrap .image-badge .version {
-	display: block;
-	margin: 0 auto;
-	margin: 5px auto 0 auto;
+.wrap.about-wrap h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 10px;
 }
 
-.about-wrap .feature-section p {
-	font-size: 15px;
-        margin-left: 0;
+.wrap.about-wrap .about-text {
+    font-size: 16px;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
 }
-.about-wrap .image-features-button {
-	font-size: 16px;
-	height: auto;
-	padding: 8px 25px;
-	margin-top: 20px;
+
+.wrap.about-wrap .about-description {
+    display: none; /* Not used in screenshot style */
 }
+
+.wrap.about-wrap iframe {
+    width: 100%;
+    max-width: 800px;
+    height: 450px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.1);
+    margin: 20px auto 50px;
+}
+
+/* Feature Section Cards */
+.feature-section {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.feature-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2c2c2c;
+}
+
+.feature-section p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.feature-section a.button {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #00c6b8;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.feature-section a.button:hover {
+    background: #009e94;
+}
+
+/* Grid Layout */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+

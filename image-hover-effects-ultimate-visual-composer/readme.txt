@@ -1,9 +1,9 @@
 ﻿=== Flipbox - Awesomes Flip Boxes Image Overlay ===
-Contributors: Biplob018, richardmallick
-Donate link: https://www.oxilab.org
+Contributors: wpkin, richardmallick
+Donate link: https://www.wpkin.com
 Tags: flip box, flip image, wordpress flipbox plugins, flipboxes, flipbox
 Requires at least: 4.4
-Stable tag: 2.9.8
+Stable tag: 2.10.0
 Tested up to: 6.8
 Requires PHP: 5.4
 License: GPLv2 or later
@@ -23,11 +23,11 @@ Flipbox - Awesomes Flip Boxes Image Overlay combines the power of “Info Box”
 
 <h3>Quick Links</h3>
 <ul>
-	<li><a href="https://oxilabdemos.com/flipbox/">Demo (Features)</a></li>	
+	<li><a href="https://wpkindemos.com/flipbox/">Demo (Features)</a></li>	
 	<li><a href="">How to Use (Video)</a></li>
-	<li><a href="https://oxilabdemos.com/flipbox/docs/installations/how-to-install-the-plugin/">How to Use (Documentation)</a></li>
+	<li><a href="https://wpkindemos.com/flipbox/docs/installations/how-to-install-the-plugin/">How to Use (Documentation)</a></li>
 	<li><a href="https://wordpress.org/support/plugin/image-hover-effects-ultimate-visual-composer/">Help and Support</a></li>
-	<li><a href="https://oxilabdemos.com/flipbox/pricing">Upgrade to Pro</a></li>
+	<li><a href="https://wpkindemos.com/flipbox/pricing">Upgrade to Pro</a></li>
 </ul>
 
 Flipbox - Awesomes Flip Boxes Image Overlay are one of the best in responsive Flip Box image plugins which allow you to decorate your product or information page beautifully of the website. It is very powerful and lightweight flip box and image overlay plugin. You can present your product info on your website at a quality and professional way by using this plugin.  Flipbox - Awesomes Flip Boxes Image Overlay is the best way to promote your product by creating amazing sliders with beautiful transition effects. The plugin has the effective tool for adding responsive slider to your website. The WordPress flip box plugin can be added both as a widget and plugin, as well as be included in the theme for displaying the images within the theme using PHP function.  You can choose from a different box types and use the provided shortcode or a template or Visual Composer ID includes to easily embedding Flip box in your Website.
@@ -172,6 +172,10 @@ If You acquired the Flipbox - Awesomes Flip Boxes Image Overlay and have not rec
 
 
 == Changelog ==
+
+= 2.10.0 = 
+*Added Getting started page.
+*Added Freemius for License.
 
 = 2.9.8 = 
 *Compatible with 6.8

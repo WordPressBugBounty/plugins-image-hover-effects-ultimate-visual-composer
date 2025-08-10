@@ -32,22 +32,6 @@ jQuery.noConflict();
         };
     }
 
-    $("input[name=oxilab_flip_box_license_key]").on("keyup", delay(function (e) {
-        var $This = $(this), $value = $This.val();
-        if ($value !== $.trim($value)) {
-            $value = $.trim($value);
-            $This.val($.trim($value));
-        }
-        var rawdata = JSON.stringify({ license: $value });
-        var functionname = "oxi_license";
-        $('.oxilab_flip_box_license_massage').html('<span class="spinner sa-spinner-open"></span>');
-        Oxi_Flip_Admin_Settings(functionname, rawdata, styleid, childid, function (callback) {
-            var callback = jQuery.parseJSON(callback);
-            $('.oxilab_flip_box_license_massage').html(callback.massage);
-            $('.oxilab_flip_box_license_text .oxi-addons-settings-massage').html(callback.text);
-        });
-    }, 1000));
-
     $("input[name=oxi_addons_font_awesome]").on("change", function (e) {
         var $This = $(this), name = $This.attr('name'), $value = $This.val();
         var rawdata = JSON.stringify({ value: $value });

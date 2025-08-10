@@ -19,8 +19,6 @@ class Settings
 
     public $roles;
     public $saved_role;
-    public $license;
-    public $status;
     public $oxi_fixed_header;
     public $fontawesome;
     public $getfontawesome = [];
@@ -36,17 +34,11 @@ class Settings
         $this->Render();
     }
 
-
-
-   
-
     public function admin()
     {
         global $wp_roles;
         $this->roles = $wp_roles->get_names();
         $this->saved_role = get_option('oxi_addons_user_permission');
-        $this->license = get_option('oxilab_flip_box_license_key');
-        $this->status = get_option('oxilab_flip_box_license_status');
         $this->admin_ajax_load();
     }
 
@@ -143,48 +135,6 @@ class Settings
                                         <br>
                                         <p class="description">Display support massage at Image Hover admin area. Don't need, kindly select it no</p>
                                     </fieldset>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <br>
-                    <h2>License Activation</h2>
-                    <p>Activate your copy to get direct plugin updates and official support.</p>
-                    <table class="form-table" role="presentation">
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <label for="oxilab_flip_box_license_key">License Key</label>
-                                </th>
-                                <td class="valid">
-                                    <input type="text" class="regular-text" id="oxilab_flip_box_license_key" name="oxilab_flip_box_license_key" value="<?php echo ($this->status == 'valid' && empty($this->license)) ? '****************************************' : esc_html($this->license); ?>">
-                                    <span class="oxi-addons-settings-connfirmation oxilab_flip_box_license_massage">
-                                        <?php
-                                        if ($this->status == 'valid' && empty($this->license)) :
-                                            echo '<span class="oxi-confirmation-success"></span>';
-                                        elseif ($this->status == 'valid' && !empty($this->license)) :
-                                            echo '<span class="oxi-confirmation-success"></span>';
-                                        elseif (!empty($this->license)) :
-                                            echo '<span class="oxi-confirmation-failed"></span>';
-                                        else :
-                                            echo '<span class="oxi-confirmation-blank"></span>';
-                                        endif;
-                                        ?>
-                                    </span>
-                                    <span class="oxi-addons-settings-connfirmation oxilab_flip_box_license_text">
-                                        <?php
-                                        if ($this->status == 'valid' && empty($this->license)) :
-                                            echo '<span class="oxi-addons-settings-massage">Pre Active</span>';
-                                        elseif ($this->status == 'valid' && !empty($this->license)) :
-                                            echo '<span class="oxi-addons-settings-massage">Active</span>';
-                                        elseif (!empty($this->license)) :
-                                            echo '<span class="oxi-addons-settings-massage">' . esc_html($this->status) . '</span>';
-                                        else :
-                                            echo '<span class="oxi-addons-settings-massage"></span>';
-                                        endif;
-                                        ?>
-                                    </span>
                                 </td>
                             </tr>
                         </tbody>

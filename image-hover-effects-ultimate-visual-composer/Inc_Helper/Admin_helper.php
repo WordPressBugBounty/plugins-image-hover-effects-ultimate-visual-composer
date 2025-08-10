@@ -40,7 +40,7 @@ trait Admin_helper
         new \OXI_FLIP_BOX_PLUGINS\Page\Settings();
     }
 
-    public function oxi_flip_box_activation()
+    public function wpkin_flipbox_getting_started()
     {
         new \OXI_FLIP_BOX_PLUGINS\Page\Welcome();
     }
@@ -75,9 +75,9 @@ trait Admin_helper
         add_submenu_page('oxi-flip-box-ultimate', 'Flip Box', 'Flip Box', $first_key, 'oxi-flip-box-ultimate', [$this, 'Flip_Home']);
         add_submenu_page('oxi-flip-box-ultimate', 'Create New', 'Create New', $first_key, 'oxi-flip-box-ultimate-new', [$this, 'Flip_Create']);
         add_submenu_page('oxi-flip-box-ultimate', 'Import Templates', 'Import Templates', $first_key, 'oxi-flip-box-ultimate-import', [$this, 'Flip_Import']);
-        add_submenu_page('oxi-flip-box-ultimate', 'Oxilab Addons', 'Oxilab Addons', $first_key, 'oxi-flip-box-ultimate-addons', [$this, 'Flip_Addons']);
+        add_submenu_page('oxi-flip-box-ultimate', 'Getting Started', 'Getting Started', $first_key, 'flipbox-getting-started', [$this, 'wpkin_flipbox_getting_started']);
         add_submenu_page('oxi-flip-box-ultimate', 'Settings', 'Settings', $first_key, 'oxi-flip-box-ultimate-settings', [$this, 'Flip_Settings']);
-        add_dashboard_page('Welcome To Flipbox - Awesomes Flip Boxes Image Overlay', 'Welcome To Flipbox - Awesomes Flip Boxes Image Overlay', 'read', 'oxi-flip-box-activation', [$this, 'oxi_flip_box_activation']);
+        // add_submenu_page('oxi-flip-box-ultimate', 'Oxilab Addons', 'Oxilab Addons', $first_key, 'oxi-flip-box-ultimate-addons', [$this, 'Flip_Addons']);
     }
 
     public function data_process()
@@ -104,8 +104,8 @@ trait Admin_helper
 
     public function redirect_on_activation()
     {
-        if (get_transient('oxi_flip_box_activation_redirect')) :
-            delete_transient('oxi_flip_box_activation_redirect');
+        if (get_transient('wpkin_flipbox_getting_started_redirect')) :
+            delete_transient('wpkin_flipbox_getting_started_redirect');
             if (is_network_admin() || isset($_GET['activate-multi'])) :
                 return;
             endif;
@@ -180,7 +180,7 @@ trait Admin_helper
                     <?php
                     if (apply_filters('oxi-flip-box-plugin/pro_version', false) == FALSE) :
                     ?>
-                        <p>By the way, did you know we also have a <a href="https://oxilabdemos.com/flipbox/pricing/">Premium Version</a>? It offers lots of options with automatic update. It also comes with 16/5 personal support.</p>
+                        <p>By the way, did you know we also have a <a href="https://wpkindemos.com/flipbox/pricing/">Premium Version</a>? It offers lots of options with automatic update. It also comes with 16/5 personal support.</p>
                         <p>Thanks Again!</p>
                     <?php
                     endif;
@@ -274,12 +274,12 @@ trait Admin_helper
                         <?php
                         if (apply_filters('oxi-flip-box-plugin/pro_version', false) == FALSE) :
                         ?>
-                            <li class="fazil-class"><a target="_blank" href="https://oxilabdemos.com/flipbox/pricing/">Upgrade</a></li>
+                            <li class="fazil-class"><a target="_blank" href="https://wpkindemos.com/flipbox/pricing/">Upgrade</a></li>
                         <?php
                         endif;
                         ?>
 
-                        <li class="saadmin-doc"><a target="_black" href="https://oxilabdemos.com/flipbox/docs/installations/how-to-install-the-plugin/">Docs</a></li>
+                        <li class="saadmin-doc"><a target="_black" href="https://wpkindemos.com/flipbox/docs/installations/how-to-install-the-plugin/">Docs</a></li>
                         <li class="saadmin-doc"><a target="_black" href="https://wordpress.org/support/plugin/image-hover-effects-ultimate-visual-composer/">Support</a></li>
                         <li class="saadmin-set"><a href="<?php echo esc_url(admin_url('admin.php?page=oxi-flip-box-ultimate-settings')); ?>"><span class="dashicons dashicons-admin-generic"></span></a></li>
                     </ul>
@@ -316,7 +316,7 @@ trait Admin_helper
     public function check_current_tabs($agr)
     {
         $vs = get_option($this->fixed_data('6f78696c61625f666c69705f626f785f6c6963656e73655f737461747573'));
-        if ($vs == $this->fixed_data('76616c6964')) {
+        if ($vs == $this->fixed_data('76616c6964') || wpkin_fb_v()->can_use_premium_code() ) {
             return TRUE;
         } else {
             return false;
