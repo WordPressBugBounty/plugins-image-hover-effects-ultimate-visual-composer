@@ -2,10 +2,10 @@
 Contributors: wpkin, richardmallick
 Donate link: https://www.wpkin.com
 Tags: flip box, flip image, wordpress flipbox plugins, flipboxes, flipbox
-Requires at least: 4.4
-Stable tag: 2.10.0
+Requires at least: 6.2
+Stable tag: 2.10.1
 Tested up to: 6.8
-Requires PHP: 5.4
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,6 +172,10 @@ If You acquired the Flipbox - Awesomes Flip Boxes Image Overlay and have not rec
 
 
 == Changelog ==
+
+= 2.10.1 = 
+*Updated Getting started page.
+*Fixed security issue.
 
 = 2.10.0 = 
 *Added Getting started page.
