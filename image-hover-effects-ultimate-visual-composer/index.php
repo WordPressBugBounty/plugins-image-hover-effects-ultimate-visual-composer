@@ -3,7 +3,7 @@
  * Plugin Name:       Flipbox - Awesomes Flip Boxes Image Overlay
  * Plugin URI:        https://wpkin.com
  * Description:       Flipbox - Awesomes Flip Boxes Image Overlay is the most easiest Flip builder Plugin. Create multiple Flip or  Flipboxes  with this.
- * Version:           2.10.4
+ * Version:           2.10.6
  * Author:            WPKIN
  * Author URI:        https://wpkin.com
  * Text Domain:       oxi-flip-box-plugin
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WPKin_Flipbox' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		const VERSION = '2.10.4';
+        const VERSION = '2.10.6';
 
 		/**
 		 * Php Version
@@ -164,10 +164,13 @@ if ( ! class_exists( 'WPKin_Flipbox' ) ) {
 		 *
 		 * @access public
 		 */
-		public function activate() {
-			$Installation = new \OXI_FLIP_BOX_PLUGINS\Includes\Installation();
-			$Installation->plugin_activation_hook();
+	public function activate() {
+		if ( ! class_exists( '\OXI_FLIP_BOX_PLUGINS\Includes\Installation' ) ) {
+			require_once __DIR__ . '/Includes/Installation.php';
 		}
+		$Installation = new \OXI_FLIP_BOX_PLUGINS\Includes\Installation();
+		$Installation->plugin_activation_hook();
+	}
 
 		/**
 		 * After Deactivate Plugin
@@ -205,10 +208,13 @@ if ( ! class_exists( 'WPKin_Flipbox' ) ) {
 		 *
 		 * @since 2.3.0
 		 */
-		public function wpkin_upgrader_process_complete( $upgrader_object, $options ) {
-			$Installation = new \OXI_FLIP_BOX_PLUGINS\Includes\Installation();
-			$Installation->plugin_upgrade_hook( $upgrader_object, $options );
+	public function wpkin_upgrader_process_complete( $upgrader_object, $options ) {
+		if ( ! class_exists( '\OXI_FLIP_BOX_PLUGINS\Includes\Installation' ) ) {
+			require_once __DIR__ . '/Includes/Installation.php';
 		}
+		$Installation = new \OXI_FLIP_BOX_PLUGINS\Includes\Installation();
+		$Installation->plugin_upgrade_hook( $upgrader_object, $options );
+	}
 
 		/**
 		 * Shortcode loader
@@ -219,6 +225,7 @@ if ( ! class_exists( 'WPKin_Flipbox' ) ) {
 		protected function Shortcode_loader() {
 			add_shortcode( 'oxilab_flip_box', [ $this, 'wp_shortcode' ] );
 			new \OXI_FLIP_BOX_PLUGINS\Modules\Visual_Composer();
+			new \OXI_FLIP_BOX_PLUGINS\Modules\Elementor();
 			$Flipbox_Widget = new \OXI_FLIP_BOX_PLUGINS\Modules\Widget();
 			add_filter( 'widget_text', 'do_shortcode' );
 			add_action( 'widgets_init', [ $Flipbox_Widget, 'flip_register_flipwidget' ] );
@@ -239,7 +246,6 @@ if ( ! class_exists( 'WPKin_Flipbox' ) ) {
 		}
 
 		public function Admin_Filters() {
-			add_filter( $this->fixed_data( '6f78692d666c69702d626f782d737570706f72742d616e642d636f6d6d656e7473' ), [ $this, $this->fixed_data( '537570706f7274416e64436f6d6d656e7473' ) ] );
 			add_filter( $this->fixed_data( '6f78692d666c69702d626f782d706c7567696e2f70726f5f76657273696f6e' ), [ $this, $this->fixed_data( '636865636b5f63757272656e745f74616273' ) ] );
 			add_filter( $this->fixed_data( '6f78692d666c69702d626f782d706c7567696e2f61646d696e5f6d656e75' ), [ $this, $this->fixed_data( '6f78696c61625f61646d696e5f6d656e75' ) ] );
 		}
