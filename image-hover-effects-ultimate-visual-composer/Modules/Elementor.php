@@ -14,12 +14,12 @@ class Elementor {
             return;
         }
         if ( ! class_exists( __NAMESPACE__ . '\Flipbox_Elementor_Widget' ) ) {
-            wpkin_define_flipbox_elementor_widget();
+            oxilab_define_flipbox_elementor_widget();
         }
                         $widgets_manager->register( new Flipbox_Elementor_Widget() );
     }
 }
-function wpkin_define_flipbox_elementor_widget() {
+function oxilab_define_flipbox_elementor_widget() {
     if ( class_exists( '\Elementor\Widget_Base' ) && ! class_exists( __NAMESPACE__ . '\Flipbox_Elementor_Widget' ) ) {
         class Flipbox_Elementor_Widget extends \Elementor\Widget_Base {
             public function get_name() { return 'wpkin_flipbox'; }
