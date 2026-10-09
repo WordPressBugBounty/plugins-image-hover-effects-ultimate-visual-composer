@@ -17,6 +17,7 @@ class Assets {
 	public function __construct() {
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scriptss' ] );
+		add_filter( 'admin_body_class', [ $this, 'editor_body_class' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'public_enqueue_scripts' ] );
 		if ( class_exists( '\\Elementor\\Plugin' ) ) {
 			add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'editor_enqueue_styles' ] );
@@ -29,6 +30,33 @@ class Assets {
 	}
 
 	/**
+	 * Whether this request is the flip box editor.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @return bool
+	 */
+	public function is_editor_page() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return isset( $_GET['page'] ) && 'oxi-flip-box-ultimate-new' === $_GET['page'] && ! empty( $_GET['styleid'] );
+	}
+
+	/**
+	 * Mark the editor so editor.css only ever applies there.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param string $classes Admin body classes.
+	 * @return string
+	 */
+	public function editor_body_class( $classes ) {
+		if ( $this->is_editor_page() ) {
+			$classes .= ' oxi-flip-editor-page';
+		}
+		return $classes;
+	}
+
+	/**
 	 * Method admin_enqueue_scriptss.
 	 *
 	 * @since 2.10.1
@@ -38,6 +66,40 @@ class Assets {
 		$current_page   = isset( $_GET['page'] ) && $_GET['page'] ? $_GET['page'] : '';
 
 		wp_enqueue_style( 'oxi_flip-global-admin-style', OXI_FLIP_BOX_URL . 'asset/backend/css/global-admin.css', false, OXI_FLIP_BOX_PLUGIN_VERSION );
+
+		// "How to use?" menu in the plugin header, on every Flipbox page.
+		if ( 0 === strpos( $current_page, 'oxi-flip-box-ultimate' ) || 'flipbox-getting-started' === $current_page ) {
+			wp_enqueue_style( 'oxi-flip-howto-menu-css', OXI_FLIP_BOX_URL . 'asset/backend/css/howto-menu.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/howto-menu.css' ) );
+		}
+
+		if ( 'oxi-flip-box-ultimate-settings' === $current_page ) {
+			wp_enqueue_style( 'oxi-flip-settings-css', OXI_FLIP_BOX_URL . 'asset/backend/css/settings.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/settings.css' ) );
+		}
+
+		// Flip box editor (Create New with a styleid): restyled by editor.css.
+		if ( $this->is_editor_page() ) {
+			wp_enqueue_style( 'oxi-flip-editor-css', OXI_FLIP_BOX_URL . 'asset/backend/css/editor.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/editor.css' ) );
+		}
+
+		// Template pages: the Create New picker (the same page with a styleid is
+		// the editor, so leave that alone) and Import Templates.
+		if ( ( 'oxi-flip-box-ultimate-new' === $current_page && empty( $_GET['styleid'] ) ) || 'oxi-flip-box-ultimate-import' === $current_page ) {
+			wp_enqueue_style( 'oxi-flip-settings-css', OXI_FLIP_BOX_URL . 'asset/backend/css/settings.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/settings.css' ) );
+			wp_enqueue_style( 'oxi-flip-templates-css', OXI_FLIP_BOX_URL . 'asset/backend/css/templates.css', [ 'oxi-flip-settings-css' ], filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/templates.css' ) );
+		}
+
+		if ( 'oxi-flip-box-ultimate' === $current_page ) {
+			wp_enqueue_style( 'oxi-flip-settings-css', OXI_FLIP_BOX_URL . 'asset/backend/css/settings.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/settings.css' ) );
+			wp_enqueue_style( 'oxi-flip-home-css', OXI_FLIP_BOX_URL . 'asset/backend/css/home.css', [ 'oxi-flip-settings-css' ], filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/home.css' ) );
+		}
+
+		// Freemius Account page: only our own scoped styles, no Bootstrap or
+		// admin.css, so Freemius' forms and dialogs keep working as designed.
+		if ( 'oxi-flip-box-ultimate-account' === $current_page ) {
+			wp_enqueue_style( 'oxi-flip-settings-css', OXI_FLIP_BOX_URL . 'asset/backend/css/settings.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/settings.css' ) );
+			wp_enqueue_style( 'oxi-flip-account-css', OXI_FLIP_BOX_URL . 'asset/backend/css/account.css', [ 'oxi-flip-settings-css' ], filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/account.css' ) );
+			wp_enqueue_style( 'oxi-flip-admin-menu-css', OXI_FLIP_BOX_URL . 'asset/backend/css/admin-menu.css', false, filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/css/admin-menu.css' ) );
+		}
 
 		if ( 'flipbox-getting-started' === $current_page ) {
 			//CSS

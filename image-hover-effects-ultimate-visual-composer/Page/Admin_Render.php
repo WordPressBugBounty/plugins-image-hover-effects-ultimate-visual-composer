@@ -52,6 +52,13 @@ class Admin_Render {
     public $child_editable;
 
     /**
+     * Empty item fields, used for a new item
+     *
+     * @since 3.1.0
+     */
+    public $blank_child_editable = [];
+
+    /**
      * Database Parent Table
      *
      * @since 2.0.0
@@ -151,9 +158,27 @@ class Admin_Render {
                 die( 'You do not have sufficient permissions to access this page.' );
             } else {
                 $data = $this->register_style();
+                // Flip Trigger goes after the design's own values, so none of
+                // their numbered positions move (see Public_Render::flip_trigger()).
+                $data .= ' flip-trigger |' . $this->posted_flip_trigger() . '|';
                 $this->wpdb->query( $this->wpdb->prepare( "UPDATE $this->parent_table SET css = %s WHERE id = %d", $data, $this->oxiid ) );
             }
         }
+    }
+
+    /**
+     * The Flip Trigger to save: "click" or "hover". When the field is not in
+     * the request the flip box keeps what it has.
+     *
+     * @since 3.1.0
+     * @return string
+     */
+    public function posted_flip_trigger() {
+        if ( isset( $_POST['oxilab-flip-trigger'] ) ) {
+            return 'click' === sanitize_key( wp_unslash( $_POST['oxilab-flip-trigger'] ) ) ? 'click' : 'hover';
+        }
+        $css = $this->wpdb->get_var( $this->wpdb->prepare( "SELECT css FROM {$this->parent_table} WHERE id = %d", $this->oxiid ) );
+        return \OXI_FLIP_BOX_PLUGINS\Page\Public_Render::flip_trigger( (string) $css );
     }
 
     public function clild() {
@@ -181,7 +206,20 @@ class Admin_Render {
                 <div class="oxi-addons-row">
                     <?php
                     apply_filters( 'oxi-flip-box-support-and-comments', true );
+                    $template_label = preg_match( '/^style\s*(\d+)$/i', $this->dbdata['style_name'], $template_match )
+                        ? sprintf( /* translators: %s: template number */ __( 'Style %s', 'oxi-flip-box-plugin' ), $template_match[1] )
+                        : $this->dbdata['style_name'];
                     ?>
+                    <div class="oxi-flip-ed-header">
+                        <a class="oxi-flip-ed-back" href="<?php echo esc_url( admin_url( 'admin.php?page=oxi-flip-box-ultimate' ) ); ?>">
+                            <span class="dashicons dashicons-arrow-left-alt" aria-hidden="true"></span><?php esc_html_e( 'All flip boxes', 'oxi-flip-box-plugin' ); ?>
+                        </a>
+                        <div class="oxi-flip-ed-title">
+                            <h1><?php echo esc_html( $this->dbdata['name'] ); ?></h1>
+                            <span class="oxi-flip-ed-template"><?php echo esc_html( $template_label ); ?></span>
+                            <span class="oxi-flip-ed-id">#<?php echo (int) $this->oxiid; ?></span>
+                        </div>
+                    </div>
                     <div class="oxi-addons-wrapper oxi-addons-flip-tabs-mode">
                         <div class="oxi-addons-settings" id="oxisettingsreload">
                             <div class="oxi-addons-style-left">
@@ -218,7 +256,8 @@ class Admin_Render {
                                             <?php wp_nonce_field( 'oxiflipstylecss' ); ?>
                                             <input type="hidden" id="style-id" name="style-id" value="<?php echo (int) $this->oxiid; ?>">
                                             <button type="button" class="btn btn-danger" id="oxi-addons-setting-reload">Reload</button>
-                                            <input type="submit" class="btn btn-primary" name="oxi-addons-flip-templates-submit" value="Submit">
+                                            <?php /* The server checks the value "Submit", only the label changes. */ ?>
+                                            <button type="submit" class="btn btn-primary" name="oxi-addons-flip-templates-submit" value="Submit"><?php esc_html_e( 'Save changes', 'oxi-flip-box-plugin' ); ?></button>
                                         </div>
                                     </div>
                                 </form>
@@ -227,19 +266,19 @@ class Admin_Render {
                             <div class="oxi-addons-style-right">
                                 <div class="oxi-addons-item-form shortcode-addons-templates-right-panel ">
                                     <div class="oxi-addons-item-form-heading shortcode-addons-templates-right-panel-heading">
-                                        Add New Flip Boxes
+                                        <?php esc_html_e( 'Flip boxes', 'oxi-flip-box-plugin' ); ?>
                                         <div class="oxi-head-toggle"></div>
                                     </div>
                                     <div class="oxi-addons-item-form-item shortcode-addons-templates-right-panel-body" id="oxi-addons-list-data-modal-open">
                                         <span>
-                                            <i class="dashicons dashicons-plus-alt oxi-icons"></i>
-                                            Open Flip Boxes Form
+                                            <i class="dashicons dashicons-plus-alt2 oxi-icons"></i>
+                                            <?php esc_html_e( 'Add a flip box', 'oxi-flip-box-plugin' ); ?>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="oxi-addons-shortcode  shortcode-addons-templates-right-panel ">
                                     <div class="oxi-addons-shortcode-heading  shortcode-addons-templates-right-panel-heading">
-                                        Shortcode Name
+                                        <?php esc_html_e( 'Name', 'oxi-flip-box-plugin' ); ?>
                                         <div class="oxi-head-toggle"></div>
                                     </div>
                                     <div class="oxi-addons-shortcode-body  shortcode-addons-templates-right-panel-body">
@@ -247,7 +286,7 @@ class Admin_Render {
                                             <div class="input-group my-2">
                                                 <input type="text" class="form-control" name="oxi-addons-name" placeholder=" Set Your Shortcode Name" value="<?php echo esc_attr( $this->dbdata['name'] ); ?>">
                                                 <div class="input-group-append">
-                                                    <input type="submit" class="btn btn-success" name="addonsstylenamechange" value="Save">
+                                                    <button type="submit" class="btn btn-success" name="addonsstylenamechange" value="Save"><?php esc_html_e( 'Rename', 'oxi-flip-box-plugin' ); ?></button>
                                                 </div>
                                             </div>
                                             <?php wp_nonce_field( 'oxi-addons-name-change' ); ?>
@@ -263,24 +302,30 @@ class Admin_Render {
                                         <em>Shortcode for posts/pages/plugins</em>
                                         <p>Copy &amp;
                                             paste the shortcode directly into any WordPress post, page or Page Builder.</p>
-                                        <input type="text" class="form-control" onclick="this.setSelectionRange(0, this.value.length)" value="[oxilab_flip_box id=&quot;<?php echo (int) $this->oxiid; ?>&quot;]">
+                                        <div class="oxi-flip-shortcode-field">
+                                            <input type="text" class="form-control" onclick="this.setSelectionRange(0, this.value.length)" value="[oxilab_flip_box id=&quot;<?php echo (int) $this->oxiid; ?>&quot;]">
+                                            <button type="button" class="oxi-flip-shortcode-copy" aria-label="<?php esc_attr_e( 'Copy shortcode', 'oxi-flip-box-plugin' ); ?>" title="<?php esc_attr_e( 'Copy shortcode', 'oxi-flip-box-plugin' ); ?>" data-copied="<?php esc_attr_e( 'Copied', 'oxi-flip-box-plugin' ); ?>" data-copy-failed="<?php esc_attr_e( 'Press Ctrl+C to copy', 'oxi-flip-box-plugin' ); ?>"><i class="dashicons dashicons-admin-page" aria-hidden="true"></i></button>
+                                        </div>
                                         <span></span>
                                         <em>Shortcode for templates/themes</em>
                                         <p>Copy &amp;
                                             paste this code into a template file to include the slideshow within your theme.</p>
-                                        <input type="text" class="form-control" onclick="this.setSelectionRange(0, this.value.length)" value="<?php echo '<?php echo do_shortcode(\'[oxilab_flip_box  id=&quot;' . (int) $this->oxiid . '&quot;]\'); ?>'; ?>">
+                                        <div class="oxi-flip-shortcode-field">
+                                            <input type="text" class="form-control" onclick="this.setSelectionRange(0, this.value.length)" value="<?php echo '<?php echo do_shortcode(\'[oxilab_flip_box  id=&quot;' . (int) $this->oxiid . '&quot;]\'); ?>'; ?>">
+                                            <button type="button" class="oxi-flip-shortcode-copy" aria-label="<?php esc_attr_e( 'Copy PHP code', 'oxi-flip-box-plugin' ); ?>" title="<?php esc_attr_e( 'Copy PHP code', 'oxi-flip-box-plugin' ); ?>" data-copied="<?php esc_attr_e( 'Copied', 'oxi-flip-box-plugin' ); ?>" data-copy-failed="<?php esc_attr_e( 'Press Ctrl+C to copy', 'oxi-flip-box-plugin' ); ?>"><i class="dashicons dashicons-admin-page" aria-hidden="true"></i></button>
+                                        </div>
                                         <span></span>
                                     </div>
                                 </div>
                                 <div class="oxi-addons-item-form shortcode-addons-templates-right-panel ">
                                     <div class="oxi-addons-item-form-heading shortcode-addons-templates-right-panel-heading">
-                                        Flipbox Rearrange
+                                        <?php esc_html_e( 'Order', 'oxi-flip-box-plugin' ); ?>
                                         <div class="oxi-head-toggle"></div>
                                     </div>
                                     <div class="oxi-addons-item-form-item shortcode-addons-templates-right-panel-body" id="oxi-addons-rearrange-data-modal-open">
                                         <span>
-                                            <i class="dashicons dashicons-plus-alt oxi-icons"></i>
-                                            Flip Data Rearrange
+                                            <i class="dashicons dashicons-sort oxi-icons"></i>
+                                            <?php esc_html_e( 'Reorder flip boxes', 'oxi-flip-box-plugin' ); ?>
                                         </span>
                                     </div>
                                 </div>
@@ -328,11 +373,39 @@ class Admin_Render {
                                                 <input type="hidden" id="item-id" name="item-id" value="<?php echo (int) $this->itemid; ?>">
                                                 <input type="hidden" id="shortcodeitemid" name="shortcodeitemid" value="">
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                <input type="submit" id="oxi-flip-template-modal-submit" name="oxi-flip-template-modal-submit" class="btn btn-success" value="Submit">
+                                                <button type="submit" id="oxi-flip-template-modal-submit" name="oxi-flip-template-modal-submit" class="btn btn-success" value="Submit"><?php esc_html_e( 'Save', 'oxi-flip-box-plugin' ); ?></button>
                                             </div>
                                         </div>
                                         <?php wp_nonce_field( 'oxiflipchildnonce' ); ?>
                                     </form>
+                                </div>
+                            </div>
+                            <?php $this->child_edit_templates(); ?>
+                            <div class="oxi-flip-ed-toast" id="oxi-flip-ed-toast" role="status" aria-live="polite" hidden
+                                data-saved="<?php esc_attr_e( 'Changes saved', 'oxi-flip-box-plugin' ); ?>"
+                                data-item="<?php esc_attr_e( 'Flip box saved', 'oxi-flip-box-plugin' ); ?>"
+                                data-renamed="<?php esc_attr_e( 'Name updated', 'oxi-flip-box-plugin' ); ?>"
+                                data-deleted="<?php esc_attr_e( 'Flip box deleted', 'oxi-flip-box-plugin' ); ?>"
+                                data-cloned="<?php esc_attr_e( 'Flip box cloned, the copy is added at the end', 'oxi-flip-box-plugin' ); ?>"
+                                data-error="<?php esc_attr_e( 'Could not save. Check your connection, or reload the page if you were logged out, then try again.', 'oxi-flip-box-plugin' ); ?>">
+                                <span class="oxi-flip-ed-toast-icon dashicons" aria-hidden="true"></span>
+                                <span class="oxi-flip-ed-toast-text"></span>
+                                <button type="button" class="oxi-flip-ed-toast-close" aria-label="<?php esc_attr_e( 'Dismiss', 'oxi-flip-box-plugin' ); ?>"><span class="dashicons dashicons-no-alt" aria-hidden="true"></span></button>
+                            </div>
+                            <div class="oxi-flip-ed-dialog" id="oxi-flip-ed-delete-dialog" hidden>
+                                <div class="oxi-flip-ed-dialog-backdrop" data-oxi-flip-ed-close></div>
+                                <div class="oxi-flip-ed-dialog-box" role="alertdialog" aria-modal="true" aria-labelledby="oxi-flip-ed-delete-title" aria-describedby="oxi-flip-ed-delete-desc">
+                                    <span class="oxi-flip-ed-dialog-icon dashicons dashicons-trash" aria-hidden="true"></span>
+                                    <h2 class="oxi-flip-ed-dialog-title" id="oxi-flip-ed-delete-title"
+                                        data-default="<?php esc_attr_e( 'Delete this flip box?', 'oxi-flip-box-plugin' ); ?>"
+                                        data-template="<?php /* translators: %s: flip box front title */ esc_attr_e( 'Delete “%s”?', 'oxi-flip-box-plugin' ); ?>"></h2>
+                                    <p class="oxi-flip-ed-dialog-text" id="oxi-flip-ed-delete-desc">
+                                        <?php esc_html_e( 'It is removed from this set and from every page that shows this shortcode. This cannot be undone.', 'oxi-flip-box-plugin' ); ?>
+                                    </p>
+                                    <div class="oxi-flip-ed-dialog-actions">
+                                        <button type="button" class="oxi-flip-ed-dialog-btn is-secondary" data-oxi-flip-ed-close><?php esc_html_e( 'Cancel', 'oxi-flip-box-plugin' ); ?></button>
+                                        <button type="button" class="oxi-flip-ed-dialog-btn is-danger" id="oxi-flip-ed-delete-submit" data-busy="<?php esc_attr_e( 'Deleting', 'oxi-flip-box-plugin' ); ?>"><?php esc_html_e( 'Delete', 'oxi-flip-box-plugin' ); ?></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -376,6 +449,57 @@ class Admin_Render {
                 $this->child_editable = array_merge( $d_editable, $hild_editable );
                 $this->itemid = $child['id'];
                 echo '<script type="text/javascript"> jQuery(document).ready(function () {setTimeout(function() { jQuery("#oxi-addons-list-data-modal").modal("show")  }, 500); });</script>';
+            }
+        }
+    }
+
+    /**
+     * Every item's edit fields, rendered once into inert templates so the
+     * Edit button can fill the item dialog in the browser (editor.js)
+     * instead of reloading the page. An item that fails to render gets no
+     * template and keeps the old reload flow through child_edit().
+     *
+     * @since 3.1.0
+     */
+    public function child_edit_templates() {
+        $current = $this->child_editable;
+        $items = [ 'new' => $this->blank_child_editable ];
+        foreach ( (array) $this->child as $item ) {
+            $items[ (int) $item['id'] ] = array_merge( explode( '{#}|{#}', (string) $item['files'] ), $this->blank_child_editable );
+        }
+        echo '<div class="oxi-flip-edit-templates" hidden>';
+        foreach ( $items as $key => $editable ) {
+            $this->child_editable = $editable;
+            ob_start();
+            try {
+                $this->modal_form_data();
+                $fields = ob_get_clean();
+            } catch ( \Throwable $e ) {
+                ob_end_clean();
+                continue;
+            }
+            echo '<template id="oxi-flip-edit-tpl-' . esc_attr( $key ) . '">' . $fields . '</template>';
+        }
+        echo '</div>';
+        $this->child_editable = $current;
+    }
+
+    /**
+     * Clone one item of this flip box. The copy is added at the end, the
+     * item must belong to the flip box being edited.
+     *
+     * @since 3.1.0
+     */
+    public function Clone_child_data() {
+        if ( ! empty( $_POST['clone'] ) && isset( $_POST['item-id'] ) && is_numeric( $_POST['item-id'] ) ) {
+            if ( ! wp_verify_nonce( $this->nonce, 'oxiflipclonedata' ) ) {
+                die( 'You do not have sufficient permissions to access this page.' );
+            } else {
+                $item_id = (int) $_POST['item-id'];
+                $child = $this->wpdb->get_row( $this->wpdb->prepare( "SELECT * FROM {$this->child_table} WHERE id = %d AND styleid = %d", $item_id, $this->oxiid ), ARRAY_A );
+                if ( $child ) {
+                    $this->wpdb->query( $this->wpdb->prepare( "INSERT INTO {$this->child_table} (styleid, type, files, css) VALUES (%d, %s, %s, %s)", [ $this->oxiid, (string) $child['type'], (string) $child['files'], (string) $child['css'] ] ) );
+                }
             }
         }
     }
@@ -778,6 +902,10 @@ class Admin_Render {
                                 jQuery(this).val(jQuery(this).attr("oxilabvalue"));
                             });
                             jQuery("#custom-css").val("");
+                            var oxiCssEditor = jQuery("#custom-css").data("oxiCodeMirror");
+                            if (oxiCssEditor) {
+                                oxiCssEditor.setValue("");
+                            }
                         });';
         endif;
         wp_add_inline_script( 'oxi-flip-box-addons-vendor', $data );
@@ -789,6 +917,21 @@ class Admin_Render {
      */
     public function hooks() {
         $this->admin_elements_frontend_loader();
+        // Custom CSS gets WordPress's own CSS code editor (CodeMirror, as in
+        // Additional CSS). False when the user turned syntax highlighting off
+        // in their profile: the plain textarea stays.
+        $css_editor = wp_enqueue_code_editor(
+            [
+                'type'       => 'text/css',
+                'codemirror' => [ 'lineWrapping' => true ],
+            ]
+        );
+        wp_enqueue_script( 'oxi-flip-editor-js', OXI_FLIP_BOX_URL . 'asset/backend/js/editor.js', $css_editor ? [ 'jquery', 'oxi-flip-box-addons-vendor', 'code-editor' ] : [ 'jquery', 'oxi-flip-box-addons-vendor' ], filemtime( OXI_FLIP_BOX_PATH . 'asset/backend/js/editor.js' ), true );
+        if ( $css_editor ) {
+            wp_add_inline_script( 'oxi-flip-editor-js', 'window.oxiFlipCssEditor = ' . wp_json_encode( $css_editor ) . ';', 'before' );
+        }
+        // So the preview can flip on click as soon as "On Click" is chosen.
+        wp_enqueue_script( 'oxi-flip-trigger', OXI_FLIP_BOX_URL . 'asset/frontend/js/flip-trigger.js', [], OXI_FLIP_BOX_PLUGIN_VERSION, true );
         $this->dbdata = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT * FROM ' . $this->parent_table . ' WHERE id = %d ', $this->oxiid ), ARRAY_A );
         $this->child = $this->wpdb->get_results( $this->wpdb->prepare( "SELECT * FROM $this->child_table WHERE styleid = %d ORDER by id ASC", $this->oxiid ), ARRAY_A );
         if ( ! empty( $this->dbdata['css'] ) ) :
@@ -827,10 +970,12 @@ class Admin_Render {
     public function saving() {
         $demos = '{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}{#}|{#}';
         $this->child_editable = explode( '{#}|{#}', $demos );
+        $this->blank_child_editable = $this->child_editable;
         $this->style_data();
         $this->child_save();
         $this->child_edit();
         $this->rename_shortcode();
+        $this->Clone_child_data();
         $this->Delete_child_data();
     }
 }
